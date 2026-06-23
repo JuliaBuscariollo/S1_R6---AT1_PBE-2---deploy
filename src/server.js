@@ -7,24 +7,28 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Corrige caminho do __dirname no ESModules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// CORS
 app.use(cors());
 
-
 app.use(express.json());
+
+// arquivos estáticos
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 app.use('/', routes);
 
-
-initializeDatabase().then(() => {
+initializeDatabase()
+  .then(() => {
     app.listen(process.env.SERVER_PORT, () => {
-        console.log(`Servidor rodando na porta ${process.env.SERVER_PORT}`);
+      console.log(
+        `Servidor rodando na porta ${process.env.SERVER_PORT}`
+      );
     });
-}).catch(err => {
+  })
+  .catch(err => {
     console.error("Erro ao inicializar o banco de dados:", err);
-});
+  });
