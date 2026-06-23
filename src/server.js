@@ -2,7 +2,17 @@ import 'dotenv/config';
 import express from 'express';
 import routes from './routes/routes.js';
 import { initializeDatabase } from './configs/Database.js';
+import cors from 'cors';
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Corrige caminho do __dirname no ESModules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// CORS
+app.use(cors());
 
 const app = express();
 
